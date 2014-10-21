@@ -1,52 +1,18 @@
-var factorial = function (n) {
-  var res = 1;
-  for(var i=2; i<=n; i++){
-    res *= i;
-  }
-  return res;
-}
-
-var printCount = 0;
-var printPi = function (pi, dir) {
-  var out = "[";
-
-  for(var i=0; i<pi.length; i++){
-    out += (" " +
-    ( dir[i]==="<" ? "<" : "" ) +
-    pi[i]+
-    ( dir[i]===">" ? ">" : "" ));
-  }
-
-  out += " ] (";
-
-  for(var i=0; i<pi.length; i++){
-    out += (" " + pi[i]);
-  }
-
-  out += " )";
-
-  console.log(out + " : " + (++printCount));
-}
-
-var swap = function (pi, i, j) {
-  var tmp = pi[i];
-  pi[i] = pi[j];
-  pi[j] = tmp;
-}
+var helpers = require("./helpers.js");
 
 var moveLeft = function (pi, dir, x) {
-  swap(pi, x-1, x);
-  swap(dir, x-1, x);
+  helpers.swap(pi, x-1, x);
+  helpers.swap(dir, x-1, x);
 }
 
 var moveRight = function (pi, dir, x) {
-  swap(pi, x, x+1);
-  swap(dir, x, x+1);
+  helpers.swap(pi, x, x+1);
+  helpers.swap(dir, x, x+1);
 }
 
+//check from n to 1 if element can make a move
+//then if there are any higest elements, change their direction
 var findMobile = function (pi, dir) {
-  //check from n to 1 if element can make a move
-  //then if there are any higest elements, change their direction
   for(var i=pi.length; i>0; i--){
     var candidate = pi.indexOf(i);
     if( (candidate == 0 && dir[candidate] === ">") ||
@@ -76,10 +42,10 @@ var SJT = function (n) {
     DIR[i] = "<";
   }
   //print firts Pi
-  printPi(PI,DIR);
+  helpers.printPi(PI,DIR,1);
+  var count = helpers.factorial(n);
   // generate n!-1 permutations of Pi
-  for(var j = 1; j < factorial(n); j++){
-
+  for(var j = 1; j < count; j++){
     if(j%n===0){
       console.log("----------------");
     }
@@ -94,10 +60,8 @@ var SJT = function (n) {
     else{
       moveRight(PI,DIR,m);
     }
-    printPi(PI,DIR);
-
+    helpers.printPi(PI,DIR,j+1);
   }
-
 }
 
 if(process.argv[2]){
