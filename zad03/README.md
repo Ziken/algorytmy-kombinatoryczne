@@ -9,7 +9,7 @@ Pseudokod:
 ```
 procedute PERM(m)
 begin
-  if m = 1 then WYPISZ(PI_1, ... ,PI_n)
+  if m = 1 then WYPISZ(PI[1], ... ,PI[n])
   else
     for i=1 to m do
       PERM(m-1)
@@ -26,7 +26,7 @@ end;
 
 //program główny
 begin
-  for i=1 to n do PI_i = i
+  for i=1 to n do PI[i] = i
   PERM(n)
 end;
 ```
