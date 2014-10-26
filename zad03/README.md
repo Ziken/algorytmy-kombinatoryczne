@@ -7,7 +7,7 @@
 Pseudokod:
 
 ```
-procedute PERM(m)
+procedure PERM(m)
 begin
   if m = 1 then WYPISZ(PI[1], ... ,PI[n])
   else
