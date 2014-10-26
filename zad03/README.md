@@ -50,8 +50,8 @@ begin
     WYPISZ(P[1], ... ,P[n])
     for m=1 to n-1 do
       if k mod m! = 0 then
-        M <- m+1
-        I <- floor( k / (M-1)! ) mod M
+        M = m+1
+        I = floor( k / (M-1)! ) mod M
         if I > 0 then PI[ B(M,I) ] <-> PI[M]
       else m <- n
 end;
