@@ -61,5 +61,5 @@ if(process.argv[2]){
   PERM(n);
 }
 else {
-  console.log("Wywołanie: node main.js N");
+  console.log("Wywołanie: node recursive.js N");
 }

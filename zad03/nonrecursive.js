@@ -50,3 +50,6 @@ if(process.argv[2]){
 
   PERM(n);
 }
+else {
+  console.log("Wywołanie: node nonrecursive.js N");
+}
