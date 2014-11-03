@@ -32,14 +32,16 @@ var copySubsets = function (subsets) {
 var genSubsets = function (n, k, x, reverse, subsets) {
   var sets = [], s, i, j, p;
 
-  for(i = 0; i < (subsets.length + 1); i++){
-    s = subsets[i] || [];
+  for(i = 0; i < subsets.length; i++){
+    s = subsets[i];
     if((i+1) === k){
       s.push(x);
     }
-    if(s.length !== 0){
-      sets.push(s);
-    }
+    sets.push(s);
+  }
+
+  if((i+1)===k){
+    sets.push([x]);
   }
 
   if(x === n){
@@ -47,11 +49,8 @@ var genSubsets = function (n, k, x, reverse, subsets) {
   }
   else{
     for(j=0; j < (sets.length +1); j++){
-        p = j+1;
-        if(reverse){
-          p = (sets.length + 1) - j;
-        }
-        genSubsets(n, p, x+1, ((j+1)%2===0), copySubsets(sets));
+      p = ( reverse ? ((sets.length + 1) - j) : (j+1) );
+      genSubsets(n, p, x+1, ((j+1)%2===0), copySubsets(sets));
     }
   }
 }
