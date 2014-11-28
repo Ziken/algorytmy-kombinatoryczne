@@ -89,7 +89,7 @@ var MoveForward = function(pm, candidates, m, n, price) {
     diff = price - SumArray(candidates);
   }
   if(diff !== 0){
-    while(MoveBackward(pm, candidates, m, n, price)){}
+    MoveBackward(pm, candidates, m, n, price);
   }
 };
 
