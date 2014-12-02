@@ -121,8 +121,8 @@ var PostageStamps = function (n, m) {
 
   while(PM){
     while(cond){
-      diff = Price - SumArray(Candidates);
-      MoveForward(PM, Candidates, m, n, diff, Price);
+      //diff = Price - SumArray(Candidates);
+      MoveForward(PM, Candidates, m, n,/* diff,*/ Price);
       diff = Price - SumArray(Candidates);
       if(diff > 0){
         cond = false;
