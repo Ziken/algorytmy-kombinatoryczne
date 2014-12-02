@@ -6,10 +6,10 @@ var SumArray = function (arr) {
   return sum;
 };
 
-var DiffMaxArray = function (arr, max, diff) {
+var DiffMaxArray = function (arr, diff) {
   var i, res = [];
   for(i = 0; i < arr.length; i++){
-    if( (arr[i] < max) && (arr[i] <= diff)){
+    if( arr[i] <= diff ){
       res.push(arr[i]);
     }
   }
@@ -81,7 +81,7 @@ var MoveForward = function(pm, candidates, m, n, price) {
   var sumElements, x;
   for(i = candidates.length; i < m; i++){
     diff = price - SumArray(candidates);
-    sumElements = DiffMaxArray(pm, Infinity, diff);
+    sumElements = DiffMaxArray(pm, diff);
     if(sumElements.length > 0){
       x = sumElements.pop();
       candidates.push({"Price": x, "Options": sumElements});
