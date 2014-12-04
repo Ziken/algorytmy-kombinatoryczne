@@ -14,3 +14,65 @@ Białe pola uformują "Wyspy": Każda cyfra n musi być częścią n-elementoweg
 ![plansza-końcowa](./img/plansza-koniec.png)
 
 `5 pkt, termin 10.12`
+
+### Przykład
+
+#### Przykład 1 (z treści zadania)
+
+Problem:
+
+```
+  1   1  |
+         |
+3       3|
+         |
+3        |
+----------
+```
+
+Rozwiązanie:
+
+```
+  1   1  |
+         |
+3 # #   3|
+        #|
+3 # #   #|
+----------
+```
+
+#### Przykład 2
+
+Źródło: [www.nikoli.com/en/puzzles/nurikabe/](http://www.nikoli.com/en/puzzles/nurikabe/)
+
+Problem:
+
+```
+              5   2|
+3                  |
+  4     2          |
+            3      |
+  4       4        |
+                  3|
+                   |
+                   |
+  3     3          |
+    1     1   3   3|
+--------------------
+```
+
+Rozwiązanie:
+
+```
+# #   # # # # 5   2|
+3                 #|
+  4 #   2 #   #    |
+    # #     3 #   #|
+  4       4       #|
+  # # #   # # #   3|
+                   |
+  # #   # #   #   #|
+  3     3     #   #|
+    1     1   3   3|
+--------------------
+```
