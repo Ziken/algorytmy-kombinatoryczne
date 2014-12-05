@@ -340,12 +340,14 @@ var MoveForward = function(board, islands, moves, t) {
       if( CheckSea(board) && CheckEndSea(board) && CheckIslands(board) ) {
         // console.log("FOUND SOLUTION!");
         // PrintBoard(board);
+        $("#examples").show();
         return;
       }
       else {
         if( ! MoveBackward(board, islands, moves) ){
           // console.log("FOUND NO SOLUTION!");
           // PrintBoard(board);
+          $("#examples").show();
           return;
         }
       }
@@ -441,6 +443,7 @@ var Nurikabe = function (n, m, t, islands) {
 
 // (1) Very Easy 5x5
 $("#example1").click( function () {
+  $("#examples").hide();
   Nurikabe(5, 5, 100,
     [
       {"x": 1, "y": 0, "size": 1},
@@ -456,6 +459,7 @@ $("#example1").click( function () {
 
 // (2) Easy 10x10
 $("#example2").click( function () {
+  $("#examples").hide();
   Nurikabe(10, 10, 25,
     [
       {"x": 7, "y": 0, "size": 5},
@@ -486,6 +490,7 @@ $("#example2").click( function () {
 
 // (3) Easy 10x10
 $("#example3").click( function () {
+  $("#examples").hide();
   Nurikabe(10, 10, 25,
     [
       {"x": 0, "y": 0, "size": 6},
