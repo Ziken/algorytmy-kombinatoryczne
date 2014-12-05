@@ -32,26 +32,29 @@ var CompareFieldSets = function ( set1, set2 ) {
 };
 
 var PrintBoard = function(board) {
-  var i,j, n = board.length;
+  var i,j, n = board.length, m = board[0].length;
   var out;
+
+  // console.log("n: " + n + "; m: " + m);
+  // console.log(board);
   for(i = 0; i < n; i++){
     out = "";
-    for(j = 0; j < n; j++){
-      if( board[j][i].Island === (-1) ){
+    for(j = 0; j < m; j++){
+      if( board[i][j].Island === (-1) ){
         out += " ";
       }
-      else if( board[j][i].Size > 0 ) {
-        out += board[j][i].Size;
+      else if( board[i][j].Size > 0 ) {
+        out += board[i][j].Size;
       }
       else {
         out += "#";
       }
-      out += (j < (n-1) ? " " : "|");
+      out += (j < (m-1) ? " " : "|");
     }
     console.log(out);
   }
   out = "";
-  for(i = 0; i < n; i++){
+  for(i = 0; i < m; i++){
     out += "--"
   }
   console.log(out);
@@ -59,7 +62,7 @@ var PrintBoard = function(board) {
 };
 
 var FindPossibleFields = function (board, island) {
-  var i,j,k, n = board.length;
+  var i,j,k, n = board.length, m = board[0].length;
   var x,y, min_x, max_x, min_y, max_y;
   var PossibleFields = [], Moves = [];
   var up, down, left, right, field;
@@ -71,7 +74,7 @@ var FindPossibleFields = function (board, island) {
     min_x = ( (x-1) > 0 ? (x-1) : 0 );
     max_x = ( (x+1) < n ? (x+1) : x );
     min_y = ( (y-1) > 0 ? (y-1) : 0 );
-    max_y = ( (y+1) < n ? (y+1) : y );
+    max_y = ( (y+1) < m ? (y+1) : y );
 
     up    = { "x": x,     "y": min_y };
     down  = { "x": x,     "y": max_y };
@@ -91,7 +94,7 @@ var FindPossibleFields = function (board, island) {
 };
 
 var CheckPossibleFields = function (board, island, possibleFields){
-  var i,j,k, n = board.length;
+  var i,j,k, n = board.length, m = board[0].length;
   var x,y, min_x, max_x, min_y, max_y;
   var Moves = [], Fields = [];
   var field, cond;
@@ -104,7 +107,7 @@ var CheckPossibleFields = function (board, island, possibleFields){
       min_x = ( (x-1) > 0 ? (x-1) : 0 );
       max_x = ( (x+1) < n ? (x+1) : x );
       min_y = ( (y-1) > 0 ? (y-1) : 0 );
-      max_y = ( (y+1) < n ? (y+1) : y );
+      max_y = ( (y+1) < m ? (y+1) : y );
 
       up    = { "x": x,     "y": min_y };
       down  = { "x": x,     "y": max_y };
@@ -140,19 +143,19 @@ var NextIsland = function(islands, idx) {
 };
 
 var CheckIslands = function(board) {
-  var i, j, k, n = board.length;
+  var i, j, k, n = board.length,m = board[0].length;
   var x, y, min_x, max_x, min_y, min_y;
   var left, right, up, down, field;
   var Fields = [];
 
   for(i = 0; i < n; i++){
-    for(j = 0; j < n; j++){
+    for(j = 0; j < m; j++){
       if( board[i][j].Island !== (-1) ){
         x = i; y = j;
         min_x = ( (x-1) > 0 ? (x-1) : 0 );
         max_x = ( (x+1) < n ? (x+1) : x );
         min_y = ( (y-1) > 0 ? (y-1) : 0 );
-        max_y = ( (y+1) < n ? (y+1) : y );
+        max_y = ( (y+1) < m ? (y+1) : y );
 
         left  = board[min_x][y    ];
         right = board[max_x][y    ];
@@ -176,16 +179,16 @@ var CheckIslands = function(board) {
 };
 
 var CheckEndSea = function(board) {
-  var i, j, n = board.length;
+  var i, j, n = board.length, m = board[0].length;
   var x, y, max_x, max_y;
   var right, down, rightDown;
 
   for(i = 0; i < n; i++){
-    for(j = 0; j < n; j++){
+    for(j = 0; j < m; j++){
       if( board[i][j].Island === (-1) ) {
         x = i; y = j;
         max_x = ( (x+1) < n ? (x+1) : x );
-        max_y = ( (y+1) < n ? (y+1) : y );
+        max_y = ( (y+1) < m ? (y+1) : y );
 
         if(max_x !== x && max_y != y){
           //check if x/y !== max_x/max_y !!
@@ -212,13 +215,13 @@ var CheckEndSea = function(board) {
 };
 
 var CheckSea = function (board) {
-  var i, j, idx = 0, n = board.length;
+  var i, j, idx = 0, n = board.length, m = board[0].length;
   var x, y, min_x, max_x, min_y, max_y;
   var field;
   var BlackFields = [], Neighbors = [], PossibleFields = [];
 
   for(i = 0; i < n; i++){
-    for(j = 0; j < n; j++){
+    for(j = 0; j < m; j++){
       if(board[i][j].Island === (-1)){
         AddFieldToSet( { "x": i, "y": j }, BlackFields );
       }
@@ -234,7 +237,7 @@ var CheckSea = function (board) {
     min_x = ( (x-1) > 0 ? (x-1) : 0 );
     max_x = ( (x+1) < n ? (x+1) : x );
     min_y = ( (y-1) > 0 ? (y-1) : 0 );
-    max_y = ( (y+1) < n ? (y+1) : y );
+    max_y = ( (y+1) < m ? (y+1) : y );
 
     up    = { "x": x,     "y": min_y };
     down  = { "x": x,     "y": max_y };
@@ -304,10 +307,10 @@ var MoveForward = function(board, islands, moves) {
       MakeMove(board, islands, moves, Move);
 
       if( CheckSea(board) && CheckIslands(board) ){
-        MoveForward(board, islands, moves);
+        return MoveForward(board, islands, moves);
       }
       else {
-        MoveBackward(board, islands, moves);
+        return MoveBackward(board, islands, moves);
       }
 
     }
@@ -321,7 +324,7 @@ var MoveForward = function(board, islands, moves) {
       PrintBoard(board);
     }
     else {
-      MoveBackward(board, islands, moves);
+      return MoveBackward(board, islands, moves);
     }
   }
 };
@@ -345,14 +348,14 @@ var MoveBackward = function(board, islands, moves) {
     MakeMove(board, islands, moves, Move);
 
     if( CheckSea(board) && CheckIslands(board) ){
-      MoveForward(board, islands, moves);
+      return MoveForward(board, islands, moves);
     }
     else {
-      MoveBackward(board, islands, moves);
+      return MoveBackward(board, islands, moves);
     }
   }
   else if(moves.length > islands.length){
-    MoveBackward(board, islands, moves);
+    return MoveBackward(board, islands, moves);
   }
   else {
     console.log("FOUND NO SOLUTION.");
@@ -360,12 +363,12 @@ var MoveBackward = function(board, islands, moves) {
   }
 };
 
-var Nurikabe = function (n, islands) {
+var Nurikabe = function (n, m, islands) {
   var Board = [], Islands = [], Moves = [];
   var i,j;
   var island, field, move;
   //fill board with black (-1) fields
-  for(i = 0; i < n; i++){
+  for(i = 0; i < m; i++){
     Board[i] = [];
     for(j = 0; j < n; j++){
       Board[i][j] = { "Island": -1 };
@@ -374,8 +377,8 @@ var Nurikabe = function (n, islands) {
   //mark islands
   for(i = 0; i < islands.length; i++){
     field = {
-      "x": islands[i].x,
-      "y": islands[i].y
+      "x": islands[i].y,  // x <--> y for better visualization
+      "y": islands[i].x   // y <--> x for better visualization
     };
     island = {
       "id": i,
@@ -397,22 +400,30 @@ var Nurikabe = function (n, islands) {
   PrintBoard(Board);
 
   //solve Nurikabe
-  MoveForward( Board, Islands, Moves );
+  return MoveForward( Board, Islands, Moves );
 };
 
-// Nurikabe(10,
+//Easy
+// Nurikabe(10, 10,
 //   [
 //     {"x": 7, "y": 0, "size": 5},
 //     {"x": 9, "y": 0, "size": 2},
+//
 //     {"x": 0, "y": 1, "size": 3},
+//
 //     {"x": 1, "y": 2, "size": 4},
 //     {"x": 4, "y": 2, "size": 2},
+//
 //     {"x": 6, "y": 3, "size": 3},
+//
 //     {"x": 5, "y": 4, "size": 4},
 //     {"x": 1, "y": 4, "size": 4},
+//
 //     {"x": 9, "y": 5, "size": 3},
+//
 //     {"x": 1, "y": 8, "size": 3},
 //     {"x": 4, "y": 8, "size": 3},
+//
 //     {"x": 2, "y": 9, "size": 1},
 //     {"x": 5, "y": 9, "size": 1},
 //     {"x": 7, "y": 9, "size": 3},
@@ -420,12 +431,57 @@ var Nurikabe = function (n, islands) {
 //   ]
 // );
 
-Nurikabe(5,
-  [
-    {"x": 1, "y": 0, "size": 1},
-    {"x": 3, "y": 0, "size": 1},
-    {"x": 0, "y": 2, "size": 3},
-    {"x": 4, "y": 2, "size": 3},
-    {"x": 0, "y": 4, "size": 3}
-  ]
-);
+//Medium
+// Nurikabe(18, 10,
+//   [
+//     {"x": 1,  "y": 0, "size": 1},
+//     {"x": 3,  "y": 0, "size": 1},
+//     {"x": 8,  "y": 0, "size": 1},
+//     {"x": 14, "y": 0, "size": 1},
+//
+//     {"x": 4,  "y": 1, "size": 5},
+//     {"x": 9,  "y": 1, "size": 2},
+//     {"x": 15, "y": 1, "size": 1},
+//
+//     {"x": 8,  "y": 2, "size": 1},
+//     {"x": 14, "y": 2, "size": 1},
+//
+//     {"x": 5,  "y": 3, "size": 5},
+//     {"x": 15, "y": 3, "size": 1},
+//
+//     {"x": 0,  "y": 4, "size": 1},
+//     {"x": 2,  "y": 4, "size": 1},
+//     {"x": 10, "y": 4, "size": 4},
+//     {"x": 14, "y": 4, "size": 1},
+//
+//     {"x": 1,  "y": 5, "size": 1},
+//     {"x": 7,  "y": 5, "size": 3},
+//     {"x": 13, "y": 5, "size": 7},
+//
+//     {"x": 2,  "y": 6, "size": 3},
+//     {"x": 17, "y": 6, "size": 6},
+//
+//     {"x": 4,  "y": 7, "size": 4},
+//     {"x": 8,  "y": 7, "size": 2},
+//     {"x": 11, "y": 7, "size": 4},
+//
+//     {"x": 6,  "y": 8, "size": 5},
+//     {"x": 16,  "y": 8, "size": 5},
+//
+//     {"x": 1,  "y": 9, "size": 1},
+//     {"x": 13, "y": 9, "size": 5}
+//   ]
+// );
+
+//Very Easy
+// Nurikabe(5, 5,
+//   [
+//     {"x": 1, "y": 0, "size": 1},
+//     {"x": 3, "y": 0, "size": 1},
+//
+//     {"x": 0, "y": 2, "size": 3},
+//
+//     {"x": 4, "y": 2, "size": 3},
+//     {"x": 0, "y": 4, "size": 3}
+//   ]
+// );
