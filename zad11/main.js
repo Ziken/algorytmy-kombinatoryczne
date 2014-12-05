@@ -49,7 +49,8 @@ var PrintBoard = function(board) {
       else {
         out += "#";
       }
-      out += (j < (m-1) ? " " : "|");
+      out += (j < (m-1) ?
+        ( (board[i][j].Size && board[i][j].Size > 9) ? "" : " ") : "|");
     }
     console.log(out);
   }
@@ -167,14 +168,14 @@ var CheckIslands = function(board) {
         for(k = 0; k < Fields.length; k++){
           field = Fields[k];
           if(field.Island !== (-1) && field.Island !== board[i][j].Island){
-            console.log("ISLANDS BAD");
+            // console.log("ISLANDS BAD");
             return false;
           }
         }
       }
     }
   }
-  console.log("ISLANDS OK");
+  // console.log("ISLANDS OK");
   return true;
 };
 
@@ -203,14 +204,14 @@ var CheckEndSea = function(board) {
               down && down.Island === (-1) &&
               rightDown && rightDown.Island === (-1) )
             {
-              console.log("END SEA - BAD");
+              // console.log("END SEA - BAD");
               return false;
             }
           }
         }
       }
     }
-    console.log("END SEA - OK");
+    // console.log("END SEA - OK");
     return true;
 };
 
@@ -256,11 +257,11 @@ var CheckSea = function (board) {
   }
 
   if( CompareFieldSets( BlackFields, Neighbors ) ){
-    console.log("SEA - OK");
+    // console.log("SEA - OK");
     return true;
   }
   else {
-    console.log("SEA - BAD");
+    // console.log("SEA - BAD");
     return false;
   }
 
@@ -270,67 +271,84 @@ var MakeMove = function(board, islands, moves, move) {
   islands[move.id].fields.push(move.field);
   board[move.field.x][move.field.y].Island = move.id;
   moves.push(move);
-  console.log("Make Move");
-  console.log(move);
-  PrintBoard(board);
+  // console.log("Make Move");
+  // console.log(move);
+  // PrintBoard(board);
 };
 
 var UndoMove = function(board, islands, moves, move) {
   var field = move.field;
   board[field.x][field.y].Island = -1;
   islands[move.id].fields.pop();
-  console.log("Undo Move");
-  console.log(move);
-  PrintBoard(board);
+  // console.log("Undo Move");
+  // console.log(move);
+  // PrintBoard(board);
 };
 
 var MoveForward = function(board, islands, moves) {
-  console.log("MOVE FORWARD!");
+  // console.log("MOVE FORWARD!");
 
   var idx, lastMove;
   var PossibleFields = [], Fields = [];
   var Move, Island, field;
 
-  lastMove = moves[ moves.length -1 ];
-  idx = NextIsland( islands, lastMove.id );
-  if(idx >= 0){
-    Island = islands[idx];
-    PossibleFields = FindPossibleFields(board,Island);
-    Fields = CheckPossibleFields( board, Island, PossibleFields );
-    if(Fields.length > 0){
-      field = Fields.pop();
-      Move = {
-        "id": Island.id,
-        "field": field,
-        "options": Fields
-      };
-      MakeMove(board, islands, moves, Move);
+  while(true){
+    PossibleFields = [];
+    Fields = [];
+    lastMove = moves[ moves.length -1 ];
+    idx = NextIsland( islands, lastMove.id );
+    if(idx >= 0){
+      Island = islands[idx];
+      PossibleFields = FindPossibleFields(board,Island);
+      Fields = CheckPossibleFields( board, Island, PossibleFields );
+      if(Fields.length > 0){
+        field = Fields.pop();
+        Move = {
+          "id": Island.id,
+          "field": field,
+          "options": Fields
+        };
+        MakeMove(board, islands, moves, Move);
 
-      if( CheckSea(board) && CheckIslands(board) ){
-        return MoveForward(board, islands, moves);
+        if( CheckSea(board) && CheckIslands(board) ){
+          // return MoveForward(board, islands, moves);
+        }
+        else {
+          if( ! MoveBackward(board, islands, moves) ){
+            console.log("FOUND NO SOLUTION!");
+            PrintBoard(board);
+            return;
+          }
+        }
+
       }
       else {
-        return MoveBackward(board, islands, moves);
+        if( ! MoveBackward(board, islands, moves) ){
+          console.log("FOUND NO SOLUTION!");
+          PrintBoard(board);
+          return;
+        }
       }
-
     }
     else {
-      MoveBackward(board, islands, moves);
-    }
-  }
-  else {
-    if( CheckSea(board) && CheckEndSea(board) && CheckIslands(board) ) {
-      console.log("FOUND SOLUTION!");
-      PrintBoard(board);
-    }
-    else {
-      return MoveBackward(board, islands, moves);
+      if( CheckSea(board) && CheckEndSea(board) && CheckIslands(board) ) {
+        console.log("FOUND SOLUTION!");
+        PrintBoard(board);
+        return;
+      }
+      else {
+        if( ! MoveBackward(board, islands, moves) ){
+          console.log("FOUND NO SOLUTION!");
+          PrintBoard(board);
+          return;
+        }
+      }
     }
   }
 };
 
 var MoveBackward = function(board, islands, moves) {
-  console.log("MOVE BACKWARD!");
+  // console.log("MOVE BACKWARD!");
 
   var move, field, Move, Field;
   var move = moves.pop();
@@ -348,7 +366,8 @@ var MoveBackward = function(board, islands, moves) {
     MakeMove(board, islands, moves, Move);
 
     if( CheckSea(board) && CheckIslands(board) ){
-      return MoveForward(board, islands, moves);
+      // return MoveForward(board, islands, moves);
+      return true;
     }
     else {
       return MoveBackward(board, islands, moves);
@@ -358,8 +377,8 @@ var MoveBackward = function(board, islands, moves) {
     return MoveBackward(board, islands, moves);
   }
   else {
-    console.log("FOUND NO SOLUTION.");
-    return undefined;
+    // console.log("FOUND NO SOLUTION.");
+    return false;
   }
 };
 
@@ -403,7 +422,21 @@ var Nurikabe = function (n, m, islands) {
   return MoveForward( Board, Islands, Moves );
 };
 
-//Easy
+
+(1) Very Easy 5x5
+Nurikabe(5, 5,
+  [
+    {"x": 1, "y": 0, "size": 1},
+    {"x": 3, "y": 0, "size": 1},
+
+    {"x": 0, "y": 2, "size": 3},
+
+    {"x": 4, "y": 2, "size": 3},
+    {"x": 0, "y": 4, "size": 3}
+  ]
+);
+
+// (2) Easy 10x10
 // Nurikabe(10, 10,
 //   [
 //     {"x": 7, "y": 0, "size": 5},
@@ -431,57 +464,27 @@ var Nurikabe = function (n, m, islands) {
 //   ]
 // );
 
-//Medium
-// Nurikabe(18, 10,
+// (3) Easy 10x10
+// Nurikabe(10, 10,
 //   [
-//     {"x": 1,  "y": 0, "size": 1},
-//     {"x": 3,  "y": 0, "size": 1},
-//     {"x": 8,  "y": 0, "size": 1},
-//     {"x": 14, "y": 0, "size": 1},
+//     {"x": 0, "y": 0, "size": 6},
+//     {"x": 2, "y": 0, "size": 2},
+//     {"x": 4, "y": 0, "size": 3},
+//     {"x": 9, "y": 0, "size": 3},
 //
-//     {"x": 4,  "y": 1, "size": 5},
-//     {"x": 9,  "y": 1, "size": 2},
-//     {"x": 15, "y": 1, "size": 1},
+//     {"x": 9, "y": 2, "size": 4},
 //
-//     {"x": 8,  "y": 2, "size": 1},
-//     {"x": 14, "y": 2, "size": 1},
+//     {"x": 4, "y": 4, "size": 2},
+//     {"x": 9, "y": 4, "size": 2},
 //
-//     {"x": 5,  "y": 3, "size": 5},
-//     {"x": 15, "y": 3, "size": 1},
+//     {"x": 0, "y": 5, "size": 3},
+//     {"x": 5, "y": 5, "size": 5},
 //
-//     {"x": 0,  "y": 4, "size": 1},
-//     {"x": 2,  "y": 4, "size": 1},
-//     {"x": 10, "y": 4, "size": 4},
-//     {"x": 14, "y": 4, "size": 1},
+//     {"x": 0, "y": 7, "size": 3},
 //
-//     {"x": 1,  "y": 5, "size": 1},
-//     {"x": 7,  "y": 5, "size": 3},
-//     {"x": 13, "y": 5, "size": 7},
-//
-//     {"x": 2,  "y": 6, "size": 3},
-//     {"x": 17, "y": 6, "size": 6},
-//
-//     {"x": 4,  "y": 7, "size": 4},
-//     {"x": 8,  "y": 7, "size": 2},
-//     {"x": 11, "y": 7, "size": 4},
-//
-//     {"x": 6,  "y": 8, "size": 5},
-//     {"x": 16,  "y": 8, "size": 5},
-//
-//     {"x": 1,  "y": 9, "size": 1},
-//     {"x": 13, "y": 9, "size": 5}
-//   ]
-// );
-
-//Very Easy
-// Nurikabe(5, 5,
-//   [
-//     {"x": 1, "y": 0, "size": 1},
-//     {"x": 3, "y": 0, "size": 1},
-//
-//     {"x": 0, "y": 2, "size": 3},
-//
-//     {"x": 4, "y": 2, "size": 3},
-//     {"x": 0, "y": 4, "size": 3}
+//     {"x": 0, "y": 9, "size": 4},
+//     {"x": 5, "y": 9, "size": 5},
+//     {"x": 7, "y": 9, "size": 4},
+//     {"x": 9, "y": 9, "size": 1}
 //   ]
 // );

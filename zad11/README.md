@@ -43,7 +43,7 @@ Rozwiązanie:
 
 #### Przykład 2
 
-Źródło: [www.nikoli.com/en/puzzles/nurikabe/](http://www.nikoli.com/en/puzzles/nurikabe/)
+Źródło: [Sample problems of Nurikabe puzzle: Sample problem 1, 10x10,	Easy, by SAKAMOTO & Nobuyuki](http://www.nikoli.com/en/puzzles/nurikabe/)
 
 Problem:
 
@@ -74,5 +74,41 @@ Rozwiązanie:
   # #   # #   #   #|
   3     3     #   #|
     1     1   3   3|
+--------------------
+```
+
+### Przykład 3
+
+Źródło: [Sample problems of Nurikabe puzzle: Sample problem 2, 10x10, Easy, by country mushroom](http://www.nikoli.com/en/puzzles/nurikabe/)
+
+Problem:
+
+```
+6   2   3         3|
+                   |
+                  4|
+                   |
+        2         2|
+3         5        |
+                   |
+3                  |
+                   |
+4         5   4   1|
+--------------------
+```
+
+Rozwiązanie:
+
+```
+6   2   3 #   # # 3|
+#   #   #          |
+#           # # # 4|
+# # #   #          |
+        2   # #   2|
+3 # #     5 # #   #|
+        #          |
+3 # #   # #   # #  |
+          #   #    |
+4 # # #   5   4   1|
 --------------------
 ```
