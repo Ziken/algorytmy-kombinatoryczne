@@ -298,7 +298,7 @@ var MoveForward = function(board, islands, moves, t) {
   var PossibleFields = [], Fields = [];
   var Move, Island, field;
 
-  setInterval( function () {
+  var interval = setInterval( function () {
     PossibleFields = [];
     Fields = [];
     lastMove = moves[ moves.length -1 ];
@@ -321,8 +321,10 @@ var MoveForward = function(board, islands, moves, t) {
         }
         else {
           if( ! MoveBackward(board, islands, moves) ){
+            clearInterval(interval);
             // console.log("FOUND NO SOLUTION!");
-            // PrintBoard(board);
+            $("#examples").show();
+            alert("FOUND NO SOLUTION!");
             return;
           }
         }
@@ -330,24 +332,28 @@ var MoveForward = function(board, islands, moves, t) {
       }
       else {
         if( ! MoveBackward(board, islands, moves) ){
+          clearInterval(interval);
           // console.log("FOUND NO SOLUTION!");
-          // PrintBoard(board);
+          $("#examples").show();
+          alert("FOUND NO SOLUTION!");
           return;
         }
       }
     }
     else {
       if( CheckSea(board) && CheckEndSea(board) && CheckIslands(board) ) {
+        clearInterval(interval);
         // console.log("FOUND SOLUTION!");
-        // PrintBoard(board);
         $("#examples").show();
+        alert("FOUND SOLUTION!");
         return;
       }
       else {
         if( ! MoveBackward(board, islands, moves) ){
+          clearInterval(interval);
           // console.log("FOUND NO SOLUTION!");
-          // PrintBoard(board);
           $("#examples").show();
+          alert("FOUND NO SOLUTION!");
           return;
         }
       }

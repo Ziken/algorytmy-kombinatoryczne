@@ -422,6 +422,7 @@ var Nurikabe = function (n, m, islands) {
   return MoveForward( Board, Islands, Moves );
 };
 
+//main
 if(process.argv[2]){
   var example = parseInt(process.argv[2]);
 
