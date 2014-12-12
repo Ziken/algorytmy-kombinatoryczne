@@ -35,6 +35,6 @@ var T = "ababababcabababccccababababcabababcccc";
 
 ```sh
 [ 6, 13, 25, 32 ]
-n = 38
+   n = 38
 T(n) = 46
 ```
