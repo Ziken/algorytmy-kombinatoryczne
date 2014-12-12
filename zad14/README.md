@@ -15,14 +15,14 @@ Przy założeniu, że wszystkie symbole we wzorcu `P` są parami różne, aby pr
 ```
 procedure MatchPattern (p, t)
   begin
-    for i=0 to |t| - |p| + 1 do
+    for i=0 to |t|-|p|+1 do
       for j=0 to |p| do
-        if t[i+j] != p[j] then
-          if j > 0 then i = i + j -1 else i = i + j
+        if t[i+j]!=p[j] then
+          if j>0 then i=i+j-1 else i=i+j
           break
-      if j == |p| then
+      if j==|p| then
         wypisz i
-        i = i + j - 1
+        i=i+j-1
   end
 ```
 
