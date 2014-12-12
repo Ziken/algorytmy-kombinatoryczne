@@ -8,7 +8,7 @@ Następnie zaimplementuj ten zmodyfikowany już algorytm. Termin 17.12 – 2pkt`
 
 ### Rozwiązanie
 
-Przy założeniu, że wszystkie symbole we wzorcu `P` są parami różnie, aby przsypieszyć algorytm naiwny do czasu `O(n)` należy podczas "przykładania" wzroca na kolejnych pozycjach w tekście `T` zapamiętywać, na której pozycji wzorzec nie zgadzał się z tekstem i zaczynać kolejne "przykładanie" od tej pozycji.
+Przy założeniu, że wszystkie symbole we wzorcu `P` są parami różne, aby przsypieszyć algorytm naiwny do czasu `O(n)` należy podczas "przykładania" wzroca na kolejnych pozycjach w tekście `T` zapamiętywać, na której pozycji wzorzec nie zgadzał się z tekstem i zaczynać kolejne "przykładanie" od tej pozycji.
 
 ### Pseudokod
 
