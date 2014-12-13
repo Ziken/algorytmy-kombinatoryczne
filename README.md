@@ -9,3 +9,4 @@ Algorytmy kombinatoryczne - Zima 2014/15
 - [Zadanie 11](./zad11/) `termin: 10.12.2014`
 - [Zadanie 12](./zad12/) `termin: 10.12.2014`
 - [Zadanie 13](./zad13/) `termin: 10.12.2014`
+- [Zadanie 14](./zad14/) `termin: 17.12.2014`
