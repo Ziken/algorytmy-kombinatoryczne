@@ -24,4 +24,13 @@ var MatchPattern = function (p, t) {
 
 };
 
-MatchPattern(P, T);
+// MatchPattern(P, T);
+
+if(process.argv[2] && process.argv[3]){
+  var p = process.argv[2];
+  var t = process.argv[3];
+  MatchPattern(p, t);
+}
+else {
+  console.log("Wywołanie: node main.js Pattern Text");
+}
